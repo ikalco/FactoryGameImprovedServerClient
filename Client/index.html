@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <meta charset="utf-8" />
+    <script src="/Libraries/p5.min.js"></script>
+
+    <script src="/Scripts/Utils.js"></script>
+    <script src="/Scripts/Tile.js"></script>
+    <script src="/Scripts/Machines/Machine.js"></script>
+    <script src="/Scripts/Machines/Conveyor.js"></script>
+    <script src="/Scripts/Chunk.js"></script>
+    <script src="/Scripts/World.js"></script>
+    <script src="/Scripts/Camera.js"></script>
+    <script src="/Scripts/Inventory.js"></script>
+    <script src="/Scripts/Player.js"></script>
+    <script src="/Scripts/MapGeneration.js"></script>
+    <script src="/Client.js"></script>
+    <script src="/sketch.js"></script>
+  </head>
+
+  <body>
+    <div id="loginform" style="display: block">
+      <h2>Login Form</h2>
+
+      <form action="#" onsubmit="login();return false;" autocomplete="off">
+        <div class="container">
+          <label for="uname"><b>Username</b></label>
+          <input type="text" placeholder="Enter Username" id="uname" required />
+
+          <button type="submit">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <div id="main_game_gui" style="visibility: hidden">
+      <div id="inventory_hotbar" onpointerover="mouseOverGui = true;" onpointerleave="mouseOverGui = false;">
+        <div class="inventory_slot" onclick="player.inventory.selectItem(0); World.resetPlaceRotation()"><img src="assets/ConveyorImage.png" /></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+        <div class="inventory_slot"></div>
+      </div>
+    </div>
+  </body>
+</html>
