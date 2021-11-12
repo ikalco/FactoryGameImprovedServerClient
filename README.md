@@ -3,9 +3,14 @@ Factory Game Client & Server
 
 Server
 ------
-- To start the server navigate to the Server folder and run the command
+- To start the server (from cloned directory), 
 
-		ruby websocket_server.rb
+```
+cd Server
+```
+```
+ruby websocket_server.rb
+```
     
 Client
 ------
