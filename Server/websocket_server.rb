@@ -279,13 +279,10 @@ class Chunk
     returnString = ""
 
     tileCount = 0
-    currentType = nil
+    currentType = @tiles[0][0].machine
 
     for x in @tiles
       for tile in x
-        if (currentType == nil)
-          currentType = tile.machine
-        end
         if (tile.machine == currentType) 
           tileCount += 1
         else
@@ -297,6 +294,10 @@ class Chunk
     end
 
     returnString.concat("#{currentType}.#{tileCount}")
+
+    if (returnString != ".256")
+      puts @tiles.inspect
+    end
 
     return returnString
   end
@@ -505,6 +506,7 @@ loop do
       sendMessage(client.socket, "HEADER:0x3", true)
       sendMessage(client.socket, "#{worldWidth},#{worldHeight}", true)
       sendLargeMessage(client.socket, "0x00", world.getTilesAsString())
+      sendLargeMessage(client.socket, "0x01", world.getMachinesAsString())
 
       # send this new player to all other player
       for selectClient in $clients
@@ -512,7 +514,7 @@ loop do
       end
 
       # send all previous players to this player
-      sendLargeMessage(client.socket, "0x01", Client.getAllClientsAsString())
+      sendLargeMessage(client.socket, "0x02", Client.getAllClientsAsString())
     end
 
     while (true) do

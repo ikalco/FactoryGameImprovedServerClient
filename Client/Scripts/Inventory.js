@@ -2,6 +2,9 @@ class Inventory {
   static canSelect = true;
   static lastPlaced;
 
+  static highlightedTileChunk;
+  static highlightedTile;
+
   constructor(player) {
     this.items = new Array(40);
 
@@ -30,6 +33,8 @@ class Inventory {
 
     let clickedTile = chunk.getTile(tileX, tileY);
     chunk.highlightTile(tileX, tileY);
+    Inventory.highlightedTileChunk = chunk;
+    Inventory.highlightedTile = clickedTile;
 
     if (Player.keysPressed[81] && Inventory.canSelect) {
       if (this.selectedItem == null) {

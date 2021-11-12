@@ -54,9 +54,11 @@ function connectToServer() {
 }
 
 function processMultiMessage(data_string) {
+  console.log(data_string);
   let header = data_string.substr(0, 4);
   if (header == "0x00") world.loadTiles(data_string.substr(4, data_string.length));
-  if (header == "0x01") OtherPlayer.loadOtherPlayers(data_string.substr(4, data_string.length));
+  if (header == "0x01") world.loadMachines(data_string.substr(4, data_string.length));
+  if (header == "0x02") OtherPlayer.loadOtherPlayers(data_string.substr(4, data_string.length));
 }
 
 let id = null;

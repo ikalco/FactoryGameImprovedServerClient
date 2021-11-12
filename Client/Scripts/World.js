@@ -12,6 +12,8 @@ class World {
     this.#height = Math.ceil(maxTileHeight / Chunk.Size);
 
     this.isCreated = false;
+    this.loadedTiles = false;
+    this.loadedMachines = false;
 
     // this.#map = TerrainGenrator.generateChunkMap(this.#width, this.#height);
   }
@@ -75,18 +77,61 @@ class World {
 
       chunks[x][y] = Chunk.createChunkFromString(x, y, chunkString);
 
-      x++;
-      if (x == recievedMapWidth) {
-        x = 0;
-        y++;
+      y++;
+      if (y == recievedMapWidth) {
+        y = 0;
+        x++;
       }
     }
 
     console.log(chunks);
     this.#map = chunks;
 
-    player.updatePos(Chunk.Size * Tile.Size * 20 - Tile.Size / 2, Chunk.Size * Tile.Size * 20 - Tile.Size / 2);
+    //player.updatePos(Chunk.Size * Tile.Size * 20 - Tile.Size / 2, Chunk.Size * Tile.Size * 20 - Tile.Size / 2);
 
+    this.loadedTiles = true;
+  }
+
+  loadMachines(data_string) {
+    if (!this.loadedTiles) console.error("ÁÁÁÁÁÁÁÁ");
+    data_string = data_string.substring(0, data_string.length - 1);
+    let chunks_data = data_string.split("-");
+
+    let x = 0;
+    let y = 0;
+
+    for (const chunk of chunks_data) {
+      let encoded_chunk_pieces = chunk.split(",");
+
+      let chunkX = 0;
+      let chunkY = 0;
+
+      for (const piece of encoded_chunk_pieces) {
+        let tileType = parseInt(piece.split(".")[0]);
+        let tileCount = parseInt(piece.split(".")[1]);
+
+        for (let i = 0; i < tileCount; i++) {
+          if (tileType) {
+            let tile = world.getChunk(x, y).getTile(chunkX, chunkY);
+            tile.machine = new Machine.ConstructorsFromType[tileType](x, y, tile);
+          }
+          chunkY++;
+          if (chunkY == Chunk.Size) {
+            chunkY = 0;
+            if (chunkX < 16) chunkX++;
+            else chunkX = 0;
+          }
+        }
+      }
+
+      y++;
+      if (y == recievedMapWidth) {
+        y = 0;
+        x++;
+      }
+    }
+
+    this.loadedMachines = true;
     this.isCreated = true;
   }
 
